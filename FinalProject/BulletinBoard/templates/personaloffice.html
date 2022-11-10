@@ -1,0 +1,34 @@
+{% extends 'default.html' %}
+{% load custom_filters %}
+
+
+{% block title %}
+Личный кабинет
+{% endblock title %}
+
+{% block content %}
+<h3>Редактирование данные</h3>
+<hr class="my-4" />
+<form method="POST">
+    {% csrf_token %}
+    <h4>Изменить имя</h4>
+    <p>Имя:{{ form.username }}</p>
+    <button  type="button">
+        <a href="{%url 'password' password.username%}">Изменить пароль</a>
+    </button>
+    <hr class="my-4" />
+    <hr class="my-4" />
+    {% if not request.user|has_group:"subscribers" %}
+    <button  type="button">
+    <a href={% url 'add_subscribers' %}>Подписаться на рассылку объявлений</a>
+    </button>
+    {% else %}
+    <button  type="button">
+        <a href={% url 'add_subscribers' %}>Одписаться от рассылку объявлений</a>
+    </button>
+    {%endif%}
+    <hr class="my-4" />
+    <input type="submit" value="Сохранить данные">
+    <hr class="my-4" />
+</form>
+{% endblock content %}

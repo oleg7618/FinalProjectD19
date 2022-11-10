@@ -1,0 +1,50 @@
+{% extends 'default.html' %}
+
+{% block title %}
+Главная
+{% endblock title %}
+
+{% block content %}
+    {% for post in posts %}
+            <div class="post-preview">
+                <a href={{ post.pk }}>
+                    <h2 class="post-title">{{ post.title }}</h2>
+                    <p class="post-subtitle">{{ post.text|safe |truncatechars:200 }}</p>
+                </a>
+                <p class="post-meta">
+                    {{ post.author }}
+                    {{ post.created | date:'D M Y' }}
+                    {{ post.category }}
+                </p>
+            </div>
+            <hr class="my-4" />
+            <hr class="my-4" />
+    {% endfor %}
+
+    {% if is_paginated %}
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-7 col-xl-7">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">First</a>
+            <a href="?page={{ page_obj.previous_page_number }}"><--</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a>{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+       {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">--></a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+    </div>
+</div>
+</div>
+    {% endif %}
+
+{% endblock content %}

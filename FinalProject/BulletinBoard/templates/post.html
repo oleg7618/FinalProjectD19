@@ -1,0 +1,36 @@
+{% extends 'default.html' %}
+
+{% block title %}
+{{ post.title }}
+{% endblock title %}
+
+{% block content %}
+    <div class="col-md-10 col-lg-5 col-xl-12">
+    <h1>{{ post.title }}</h1>
+    <p>
+        {{ post.author }}:
+        {{ post.created | date:'D M Y' }}
+        {{ post.category }}
+    </p>
+    <hr class="my-4" />
+     {{ post.text|safe }}
+     {% if  post.author|iriencode  ==  user.username  %}
+     <hr class="my-4" />
+     <a href="{% url 'post_update' post.id %}"><u>Редактировать</u></a>
+     {%endif%}
+     <hr class="my-4" />
+     {% if request.user.is_authenticated %}
+     <form method="post">
+        {% csrf_token %}
+        <p>Оставить отклик:</p>
+        <p>
+            <textarea rows="5" cols="60" name="reply"></textarea>
+        </p>
+        <input type="submit" value="Сохранить">
+
+        </form>
+        {%endif%}
+        <hr class="my-4" />
+        <hr class="my-4" />
+    </div>
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends 'default.html' %}
+
+{% block title %}
+Edit post
+{% endblock title %}
+
+{% block content %}
+<h3>Редактирование новость</h3>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.media }}
+    <p>Заголовок: {{ form.title }}</p>
+    <p>Категория: {{ form.category }}</p>
+    <p>Текст</p>
+    {% autoescape off %}
+    <p>{{ form.text }}</p>
+    {% endautoescape %}
+    <input type="submit" value="Сохранить обьявление">
+    <hr class="my-4" />
+</form>
+{% endblock content %}

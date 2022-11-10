@@ -1,0 +1,15 @@
+{% extends 'default.html' %}
+{% block title %}
+Регистрация
+{% endblock title %}
+{% block content %}
+<h2> Активация </h2>
+<form method="post">
+{% csrf_token %}
+
+<p><b>Введите код:</b></p>
+    <p><textarea rows="1" cols="10" name="code"></textarea></p>
+    <p><input type="submit" value="Продолжить"></p>
+<hr class="my-4" />
+</form>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+Личная страница
+{% endblock title %}
+
+{% block content %}
+    <h1>Ваши отклики</h1>
+    <form method="GET">
+        <p>
+        По объявлению:
+        {{ filter.form.post }}
+        <p>
+        <input type="submit" value="Найти">
+    </form>
+    <hr class="my-4" />
+    {% if personalpage %}
+    <hr class="my-4" />
+
+    {% for post in filter.qs %}
+    <div class="post-preview">
+            <p class="post-subtitle">
+                <a href='/{{ post.post_id }}'>
+                    {{ post.text}}
+                </a>
+            </p>
+            <hr class="my-4" />
+        <p class="post-meta">
+            {{ post.user }}
+            {{ post.created | date:'D M Y' }}
+            {{ post.get_category }}
+        </p>
+        <p>
+            {% if not post.accept %}
+            <a href="{% url 'reply_accept' post.id %}"><u>Принять отклик</u></a>
+            {% endif %}
+            <a href="{% url 'reply_delete' post.id %}"><u>Удалить отклик</u></a>
+        </p>
+    </div>
+    <hr class="my-4" />
+    <hr class="my-4" />
+        {% endfor %}
+    {% endif %}
+{% endblock content %}

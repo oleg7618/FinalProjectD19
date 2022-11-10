@@ -1,0 +1,16 @@
+{% extends 'default.html' %}
+{% load custom_filters %}
+
+
+{% block title %}
+Subscribers
+{% endblock title %}
+
+{% block content %}
+{% if not request.user|has_group:"subscribers" %}
+    <H2>Вы сами отписались от этого !!!</H2>
+{% else %}
+    <H2>Вы сами подписались на это !!!</H2>
+{%endif%}
+
+{% endblock content %}
